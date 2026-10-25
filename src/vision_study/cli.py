@@ -132,7 +132,7 @@ def run(
     return result
 
 
-def main():
+def main() -> None:
     p = argparse.ArgumentParser()
     p.add_argument("--output", default="results/cpu")
     p.add_argument("--data", default="data")

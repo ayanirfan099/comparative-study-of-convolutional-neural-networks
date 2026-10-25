@@ -4,3 +4,6 @@ Executed two seeded CPU synthetic runs (with and without augmentation), 100 trai
 
 ![Synthetic learning curves](results/synthetic-no-augmentation/curves.png)
 ![Synthetic diagnostic Grad-CAM](results/synthetic-no-augmentation/gradcam.png)
+
+
+Additional verified check: official torchvision ImageNet ResNet18 weights downloaded successfully from download.pytorch.org. A frozen-backbone one-epoch training/evaluation/Grad-CAM/checkpoint run completed on 20 synthetic training images; see results/pretrained-transfer-smoke/metrics.json. This validates the transfer execution path, not CIFAR-10 accuracy. The custom two-run synthetic experiment and all real CIFAR-10 limitations above remain unchanged.

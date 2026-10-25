@@ -41,9 +41,12 @@ ruff format --check .
 Four tests passed: architecture outputs, Grad-CAM finite maps, invalid transfer flags, disjoint train/validation IDs, seeded repeated-run equality, checkpoint reload, end-to-end metric/figure outputs and CLI help. Initial Streamlit page checked with a real synthetic-trained checkpoint.
 
 ## Limitations and future work
-Official CIFAR-10 download failed with proxy tunnel 403 at www.cs.toronto.edu. No CIFAR-10 benchmark or pretrained transfer comparison has executed. Synthetic images have independent random labels: accuracy is a software diagnostic, not scientific recognition performance. Pretrained weights must download successfully; no silent random-weight fallback. No GPU benchmark, confidence calibration or full hyperparameter search. Upload browser interaction remains untested. Grad-CAM is a qualitative diagnostic, not causal explanation.
+Official CIFAR-10 download failed with proxy tunnel 403 at www.cs.toronto.edu. No real-data CIFAR-10 or pretrained transfer comparison has executed. Synthetic images have independent random labels: accuracy is a software diagnostic, not scientific recognition performance. Pretrained weights must download successfully; no silent random-weight fallback. No GPU benchmark, confidence calibration or full hyperparameter search. Upload browser interaction remains untested. Grad-CAM is a qualitative diagnostic, not causal explanation.
 
 ## References and licensing
 Krizhevsky (2009), *Learning Multiple Layers of Features from Tiny Images*, University of Toronto technical report; [CIFAR dataset](https://www.cs.toronto.edu/~kriz/cifar.html). He et al. (2016), *Deep Residual Learning for Image Recognition*, CVPR, DOI 10.1109/CVPR.2016.90. Selvaraju et al. (2017), *Grad-CAM*, ICCV, DOI 10.1109/ICCV.2017.74. torchvision ResNet18 weights metadata and CIFAR10 dataset documentation. Dataset and weights not redistributed.
 
 Repository code: MIT; third-party data, pretrained weights and libraries retain their own terms. No affiliations, publications or independent authorship claims are made.
+
+
+Additional verified check: official torchvision ImageNet ResNet18 weights downloaded successfully from download.pytorch.org. A frozen-backbone one-epoch training/evaluation/Grad-CAM/checkpoint run completed on 20 synthetic training images; see results/pretrained-transfer-smoke/metrics.json. This validates the transfer execution path, not CIFAR-10 accuracy. The custom two-run synthetic experiment and all real CIFAR-10 limitations above remain unchanged.

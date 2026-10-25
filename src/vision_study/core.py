@@ -12,7 +12,7 @@ STD = (0.247, 0.2435, 0.2616)
 CLASSES = ["airplane", "automobile", "bird", "cat", "deer", "dog", "frog", "horse", "ship", "truck"]
 
 
-def seed_all(seed):
+def seed_all(seed: int) -> None:
     random.seed(seed)
     np.random.seed(seed)
     torch.manual_seed(seed)
@@ -34,11 +34,11 @@ class SmallCNN(nn.Module):
         self.pool = nn.AdaptiveAvgPool2d(1)
         self.classifier = nn.Linear(32, 10)
 
-    def forward(self, x):
+    def forward(self, x: torch.Tensor) -> torch.Tensor:
         return self.classifier(self.pool(self.features(x)).flatten(1))
 
 
-def build_model(kind="custom", pretrained=False, freeze=False):
+def build_model(kind: str = "custom", pretrained: bool = False, freeze: bool = False) -> nn.Module:
     if kind not in {"custom", "resnet18"}:
         raise ValueError("Unknown architecture")
     if kind == "custom":
@@ -151,7 +151,7 @@ def epoch(model, loader, optimizer=None, freeze=False):
     return {"loss": loss_sum / total, "accuracy": correct / total}, ys, predictions
 
 
-def gradcam(model, x, target_layer):
+def gradcam(model: nn.Module, x: torch.Tensor, target_layer: nn.Module) -> np.ndarray:
     activation = []
     gradient = []
 
@@ -176,7 +176,7 @@ def gradcam(model, x, target_layer):
         handle.remove()
 
 
-def load_checkpoint(path):
+def load_checkpoint(path: str | Path) -> tuple[nn.Module, dict]:
     checkpoint = torch.load(Path(path), map_location="cpu", weights_only=True)
     model = build_model(checkpoint["kind"], pretrained=False)
     model.load_state_dict(checkpoint["state_dict"])

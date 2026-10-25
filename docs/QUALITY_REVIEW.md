@@ -4,4 +4,10 @@ Four tests passed: architecture outputs, Grad-CAM finite maps, invalid transfer 
 
 Reviewed data provenance, split isolation, deterministic seeds, explicit smoke-vs-benchmark labeling, no paid services, trusted artifact loading, metric serialization and reproduction commands. Remote Actions execution has not been verified. Remaining limitations:
 
-Official CIFAR-10 download failed with proxy tunnel 403 at www.cs.toronto.edu. No CIFAR-10 benchmark or pretrained transfer comparison has executed. Synthetic images have independent random labels: accuracy is a software diagnostic, not scientific recognition performance. Pretrained weights must download successfully; no silent random-weight fallback. No GPU benchmark, confidence calibration or full hyperparameter search. Upload browser interaction remains untested. Grad-CAM is a qualitative diagnostic, not causal explanation.
+Official CIFAR-10 download failed with proxy tunnel 403 at www.cs.toronto.edu. No real-data CIFAR-10 or pretrained transfer comparison has executed. Synthetic images have independent random labels: accuracy is a software diagnostic, not scientific recognition performance. Pretrained weights must download successfully; no silent random-weight fallback. No GPU benchmark, confidence calibration or full hyperparameter search. Upload browser interaction remains untested. Grad-CAM is a qualitative diagnostic, not causal explanation.
+
+
+Additional verified check: official torchvision ImageNet ResNet18 weights downloaded successfully from download.pytorch.org. A frozen-backbone one-epoch training/evaluation/Grad-CAM/checkpoint run completed on 20 synthetic training images; see results/pretrained-transfer-smoke/metrics.json. This validates the transfer execution path, not CIFAR-10 accuracy. The custom two-run synthetic experiment and all real CIFAR-10 limitations above remain unchanged.
+
+
+Final local checks and exact test runner outputs are saved in [VERIFICATION.json](VERIFICATION.json). Direct dependency versions from the executed environment are in [validated_versions.json](validated_versions.json). Automated static types were not checked; public numerical/data boundaries include annotations.
