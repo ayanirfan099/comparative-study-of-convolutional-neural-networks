@@ -1,0 +1,8 @@
+# Four comparisons use the same seed, split, limit and epoch budget.
+seed = 42
+cpu_epochs = 2
+cpu_limit = 1000
+full_epochs = 50
+full_limit = 40000
+experiments = ["custom", "custom --augment", "resnet18 --pretrained --freeze", "resnet18 --pretrained"]
+# Pretrained ResNet uses 224px ImageNet normalization; custom uses 32px CIFAR normalization.

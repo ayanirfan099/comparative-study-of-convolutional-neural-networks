@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+[project]
+name = "vision-study"
+version = "0.1.0"
+description = "Controlled CNN and transfer-learning experiments"
+requires-python = ">=3.11"
+dependencies = ["torch>=2.2", "torchvision>=0.17", "numpy>=1.26", "scikit-learn>=1.4", "matplotlib>=3.8", "streamlit>=1.40", "Pillow>=10"]
+[project.optional-dependencies]
+dev = ["pytest>=8", "ruff>=0.9"]
+[project.scripts]
+vision-study = "vision_study.cli:main"
+[tool.setuptools.packages.find]
+where = ["src"]
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+[tool.ruff]
+line-length = 100

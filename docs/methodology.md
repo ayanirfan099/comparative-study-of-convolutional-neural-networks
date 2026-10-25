@@ -1,0 +1,3 @@
+# Methodology
+
+Official CIFAR-10 train/test boundaries are preserved. A seeded permutation partitions training data into train and validation subsets; the test loader uses official test data only. CPU mode uses a bounded training subset; full mode uses 40,000 training rows, 10,000 validation rows and 50 epochs. AdamW, ReduceLROnPlateau and validation-loss early stopping select checkpoints. Four comparisons: custom/no augmentation, custom/augmentation, pretrained frozen ResNet18 and pretrained fine-tuned ResNet18. ImageNet weights use 224px inputs and ImageNet normalization; custom CNN uses 32px CIFAR normalization. These differing representations and pretraining must be disclosed. Frozen backbone BatchNorm statistics remain fixed.
