@@ -2,22 +2,26 @@
 
 A reproducible PyTorch training/evaluation system for a small CNN and ResNet18, including explicit pretrained-weight provenance, augmentation, checkpoint selection, Grad-CAM and a checkpoint-backed Streamlit demo.
 
-## Research question and methodology
-Official CIFAR-10 train/test boundaries are preserved. A seeded permutation partitions training data into train and validation subsets; the test loader uses official test data only. CPU mode uses a bounded training subset; full mode uses 40,000 training rows, 10,000 validation rows and 50 epochs. AdamW, ReduceLROnPlateau and validation-loss early stopping select checkpoints. Four comparisons: custom/no augmentation, custom/augmentation, pretrained frozen ResNet18 and pretrained fine-tuned ResNet18. ImageNet weights use 224px inputs and ImageNet normalization; custom CNN uses 32px CIFAR normalization. These differing representations and pretraining must be disclosed. Frozen backbone BatchNorm statistics remain fixed.
+[![CI](https://github.com/ayanirfan099/comparative-study-of-convolutional-neural-networks/actions/workflows/ci.yml/badge.svg)](https://github.com/ayanirfan099/comparative-study-of-convolutional-neural-networks/actions/workflows/ci.yml) ![Python 3.12 CI](https://img.shields.io/badge/Python-3.12_CI-3776AB) [![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
-```mermaid
-flowchart LR
-    A[Validated data] --> B[Reproducible preprocessing]
-    B --> C[Models and baselines]
-    C --> D[Held-out evaluation]
-    D --> E[Metrics and analysis]
-```
+![Grad-CAM from synthetic software diagnostics, not CIFAR-10 recognition results](results/synthetic-no-augmentation/gradcam.png)
+
 
 ## Executed results
 Executed two seeded CPU synthetic runs (with and without augmentation), 100 training images, 20 validation, 20 test, 2 epochs. Non-augmented loss 2.2971; accuracy 0.200, training time 0.185s. These are **not CIFAR-10 results**. Actual JSON files include per-class metrics, latency, parameters, failure positions and full configuration.
 
 ![Synthetic learning curves](results/synthetic-no-augmentation/curves.png)
-![Synthetic diagnostic Grad-CAM](results/synthetic-no-augmentation/gradcam.png)
+
+### Recorded synthetic execution comparison
+
+Both rows use 100 synthetic training images, 20 validation and 20 test images, seed 42 and two epochs. These random-label diagnostics are not CIFAR-10 or transfer-learning accuracy comparisons. Timings describe the original recorded CPU run, not a current hardware benchmark.
+
+| Custom CNN | Test accuracy | Parameters | Training seconds | Single-image seconds |
+| --- | ---: | ---: | ---: | ---: |
+| No augmentation | 0.20 | 5,418 | 0.1853 | 0.0002009 |
+| Augmentation | 0.20 | 5,418 | 0.1830 | 0.0001964 |
+
+Sources: `results/synthetic-no-augmentation/metrics.json` and `results/synthetic-augmentation/metrics.json`.
 
 ## Reproduce
 From this repository root:
@@ -33,6 +37,19 @@ streamlit run src/vision_study/app.py
 pytest -q
 ruff check .
 ruff format --check .
+```
+
+## Research question and methodology
+Official CIFAR-10 train/test boundaries are preserved. A seeded permutation partitions training data into train and validation subsets; the test loader uses official test data only. CPU mode uses a bounded training subset; full mode uses 40,000 training rows, 10,000 validation rows and 50 epochs. AdamW, ReduceLROnPlateau and validation-loss early stopping select checkpoints. Four comparisons: custom/no augmentation, custom/augmentation, pretrained frozen ResNet18 and pretrained fine-tuned ResNet18. ImageNet weights use 224px inputs and ImageNet normalization; custom CNN uses 32px CIFAR normalization. These differing representations and pretraining must be disclosed. Frozen backbone BatchNorm statistics remain fixed.
+
+```mermaid
+flowchart LR
+    Data[Official CIFAR train / test boundaries] --> Split[Train-only validation split]
+    Split --> Custom[Custom CNN with / without augmentation]
+    Split --> Transfer[ImageNet ResNet18 frozen / fine-tuned]
+    Custom --> Select[Validation-loss checkpoint selection]
+    Transfer --> Select
+    Select --> Test[Test metrics, latency and Grad-CAM]
 ```
 
 ## Implementation and review
