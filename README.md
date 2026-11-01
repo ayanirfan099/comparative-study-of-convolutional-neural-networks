@@ -1,4 +1,4 @@
-# CNNs and transfer learning: a controlled CIFAR-10 pipeline
+# CNN & Transfer Learning — CIFAR-10 Experiment Pipeline
 
 A reproducible PyTorch training/evaluation system for a small CNN and ResNet18, including explicit pretrained-weight provenance, augmentation, checkpoint selection, Grad-CAM and a checkpoint-backed Streamlit demo.
 
